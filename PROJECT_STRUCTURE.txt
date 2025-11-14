@@ -7,10 +7,6 @@ project-chimera/
 │   ├── PROJECT_STRUCTURE.txt              # This file
 │   └── example_output.txt                 # Sample execution output
 │
-├── 🧪 Test Scripts
-│   ├── test-request.sh                    # Linux/Mac test script
-│   └── test-request.ps1                   # Windows PowerShell test script
-│
 ├── ⚙️ Configuration
 │   ├── package.json                       # Root package with npm scripts
 │   └── .gitignore                         # Git ignore patterns

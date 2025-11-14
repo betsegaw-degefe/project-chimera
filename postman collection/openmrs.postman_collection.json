@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "bb44ab47-591c-4e2b-a6a4-4aff5294fa11",
+		"name": "openmrs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4806931"
+	},
+	"item": [
+		{
+			"name": "create observation",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Admin123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "YWRtaW46QWRtaW4xMjM=",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"obsDatetime\": \"2023-05-02\",\r\n    \"person\": \"61c80fc11b054602999cd286c85a169c\",\r\n    \"encounter\": \"a143ce69e11e4ae3aa1b45ae40b0fb8b\",\r\n    \"concept\": \"c7ca4fc7-8944-4824-84b0-c299d59a89c0\",\r\n    \"value\": \"166706AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\r\n    \"uuid\": \"001e92d784f7439f9c663d03f044d077\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.56.20.16:8080/openmrs/ws/rest/v1/obs",
+					"protocol": "http",
+					"host": [
+						"10",
+						"56",
+						"20",
+						"16"
+					],
+					"port": "8080",
+					"path": [
+						"openmrs",
+						"ws",
+						"rest",
+						"v1",
+						"obs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create person",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Admin123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"identifiers\": [\r\n        {\r\n            \"identifier\": \"010796/2005_3267\",\r\n            \"identifierType\": \"52c28db7-09fb-4d33-8f9f-4500347256b6\",\r\n            \"location\": \"44c3efb0-2583-4c80-a79e-1f756a03c0a1\",\r\n            \"preferred\": false\r\n        },\r\n        {\r\n            \"identifier\": \"070801102438\",\r\n            \"identifierType\": \"d956f302-1723-4eca-9548-fb7e66706d34\",\r\n            \"location\": \"44c3efb0-2583-4c80-a79e-1f756a03c0a1\",\r\n            \"preferred\": false\r\n        }\r\n    ],\r\n    \"person\": {\r\n        \"gender\": \"F\",\r\n        \"age\": 0,\r\n        \"birthdate\": \"1987-01-24\",\r\n        \"birthdateEstimated\": false,\r\n        \"dead\": false,\r\n        \"deathDate\": null,\r\n        \"causeOfDeath\": null,\r\n        \"uuid\": \"001cce47da4a40fcacbe1a2426afd282\",\r\n        \"names\": [\r\n            {\r\n                \"givenName\": \"BELESTI\",\r\n                \"middleName\": \"GETA\",\r\n                \"familyName\": \"MITIKA\"\r\n            }\r\n        ],\r\n        \"addresses\": [\r\n            {\r\n                \"address1\": null,\r\n                \"cityVillage\": \"Hadiya Zonal Health Department\",\r\n                \"stateProvince\": null,\r\n                \"country\": \"Ethiopia\",\r\n                \"postalCode\": null,\r\n                \"countyDistrict\": null\r\n            }\r\n        ],\r\n        \"attributes\": [\r\n            {\r\n                \"attributeType\": \"14d4f066-15f5-102d-96e4-000c29c2a5d7\",\r\n                \"value\": \"0921215742\"\r\n            },\r\n            {\r\n                \"attributeType\": \"89e3700a-e188-4bc0-87d2-de7518d80dd1\",\r\n                \"value\": \"86b7b8b9-520d-4780-853c-f2213e1426d0\"\r\n            }\r\n        ],\r\n        \"_id\": null,\r\n        \"resourceName\": null,\r\n        \"stringifiedContent\": null\r\n    },\r\n    \"uuid\": \"001cce47da4a40fcacbe1a2426afd282\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.56.20.16:8080/openmrs/ws/rest/v1/patient",
+					"protocol": "http",
+					"host": [
+						"10",
+						"56",
+						"20",
+						"16"
+					],
+					"port": "8080",
+					"path": [
+						"openmrs",
+						"ws",
+						"rest",
+						"v1",
+						"patient"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "location",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Admin123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"uuid\": \"86b7b8b9-520d-4780-853c-f2213e1426d0\",\r\n    \"name\": \"Mizan Teppi Teaching Hospital\",\r\n    \"description\": null,\r\n    \"address1\": null,\r\n    \"cityVillage\": null,\r\n    \"stateProvince\": null,\r\n    \"country\": \"Ethiopia\",\r\n    \"postalCode\": null,\r\n    \"countyDistrict\": null,\r\n    \"attributes\": [\r\n        {\r\n            \"attributeType\": \"98687afb-dfee-41f1-bcd6-c10c3734d9bc\",\r\n            \"value\": \"726010001\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.56.20.16:8080/openmrs/ws/rest/v1/location",
+					"protocol": "http",
+					"host": [
+						"10",
+						"56",
+						"20",
+						"16"
+					],
+					"port": "8080",
+					"path": [
+						"openmrs",
+						"ws",
+						"rest",
+						"v1",
+						"location"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

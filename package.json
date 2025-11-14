@@ -1,0 +1,17 @@
+{
+  "name": "project-chimera",
+  "version": "1.0.0",
+  "description": "Multi-agent orchestration system using MCP-inspired architecture",
+  "scripts": {
+    "install:all": "npm install && cd orchestrator && npm install && cd ../agents/sanitizer && npm install && cd ../log-analyzer && npm install && cd ../report-generator && npm install && cd ../..",
+    "build:all": "cd orchestrator && npm run build && cd ../agents/sanitizer && npm run build && cd ../log-analyzer && npm run build && cd ../report-generator && npm run build && cd ../..",
+    "start:orchestrator": "cd orchestrator && npm start",
+    "start:sanitizer": "cd agents/sanitizer && npm start",
+    "start:log-analyzer": "cd agents/log-analyzer && npm start",
+    "start:report-generator": "cd agents/report-generator && npm start"
+  },
+  "keywords": ["mcp", "orchestration", "multi-agent", "ai"],
+  "author": "",
+  "license": "MIT"
+}
+

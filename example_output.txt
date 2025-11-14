@@ -1,0 +1,338 @@
+================================================================================
+PROJECT CHIMERA - EXAMPLE OUTPUT
+================================================================================
+
+TEST REQUEST:
+-------------
+POST http://localhost:5000/plan-and-run
+
+Request Body:
+{
+  "request": "Analyze system logs for errors, sanitize sensitive data, and generate a report with visual",
+  "data": "<13 lines of system logs with PII and errors>"
+}
+
+ORCHESTRATOR CONSOLE OUTPUT:
+----------------------------
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎭 PROJECT CHIMERA - MCP ORCHESTRATOR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Orchestrator running on http://localhost:5000
+📋 Endpoints:
+   POST /register        - Agent registration
+   GET  /agents          - List registered agents
+   POST /plan-and-run    - Execute orchestration
+   GET  /health          - Health check
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⏳ Waiting for agents to register...
+
+✅ Agent registered: sanitizer at http://localhost:5001
+✅ Agent registered: log-analyzer at http://localhost:5002
+✅ Agent registered: report-generator at http://localhost:5003
+
+============================================================
+📨 Received request: Analyze system logs for errors, sanitize sensitive data, and generate a report with visual
+============================================================
+
+🔍 Planning based on keywords:
+  - Sanitizer needed: true
+  - Log Analyst needed: true
+  - Report needed: true
+
+📋 Generated Plan:
+[
+  {
+    "agent": "log-analyzer",
+    "task": "analyze",
+    "inputFrom": "user"
+  },
+  {
+    "agent": "report-generator",
+    "task": "generate",
+    "inputFrom": "log-analyzer",
+    "dependsOn": "log-analyzer"
+  }
+]
+
+🚀 Executing plan...
+
+📍 Step 1: log-analyzer (analyze)
+  → Calling http://localhost:5002/analyze
+  ✓ Success
+
+📍 Step 2: report-generator (generate)
+  → Calling http://localhost:5003/generate-report
+  ✓ Success
+
+✅ Execution Complete!
+============================================================
+
+
+LOG ANALYZER CONSOLE OUTPUT:
+-----------------------------
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 LOG ANALYZER AGENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Running on http://localhost:5002
+📋 Endpoints:
+   POST /analyze   - Analyze logs (calls sanitizer internally)
+   GET  /info      - Agent information
+   GET  /health    - Health check
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔗 Will call Sanitizer at: http://localhost:5001
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📡 Attempting to register with orchestrator at http://localhost:5000...
+✅ Successfully registered with orchestrator
+   Response: Agent log-analyzer registered successfully
+
+📊 Analyzing logs (843 characters)
+🔗 Calling Sanitizer agent at http://localhost:5001/sanitize
+  ✓ Sanitization complete: 4 items removed
+  🔍 Analyzing for patterns...
+  ✓ Analysis complete:
+    - Critical: 1
+    - Errors: 4
+    - Warnings: 5
+    - Info: 3
+
+
+SANITIZER CONSOLE OUTPUT:
+--------------------------
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔒 SANITIZER AGENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Running on http://localhost:5001
+📋 Endpoints:
+   POST /sanitize  - Sanitize sensitive data
+   GET  /info      - Agent information
+   GET  /health    - Health check
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📡 Attempting to register with orchestrator at http://localhost:5000...
+✅ Successfully registered with orchestrator
+   Response: Agent sanitizer registered successfully
+
+🔒 Sanitizing data (843 characters)
+  - Removed 3 email(s)
+  - Removed 2 ipv4(s)
+  - Removed 1 apiKey(s)
+  ✓ Sanitization complete: 6 items removed
+
+
+REPORT GENERATOR CONSOLE OUTPUT:
+---------------------------------
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📝 REPORT GENERATOR AGENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Running on http://localhost:5003
+📋 Endpoints:
+   POST /generate-report  - Generate intelligence brief
+   GET  /info             - Agent information
+   GET  /health           - Health check
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📡 Attempting to register with orchestrator at http://localhost:5000...
+✅ Successfully registered with orchestrator
+   Response: Agent report-generator registered successfully
+
+📝 Generating report from analysis data
+  ✓ Report generated: Health Score 60%
+  ✓ Visual asset created
+
+
+API RESPONSE (JSON):
+--------------------
+
+{
+  "request": "Analyze system logs for errors, sanitize sensitive data, and generate a report with visual",
+  "plan": [
+    {
+      "agent": "log-analyzer",
+      "task": "analyze",
+      "inputFrom": "user"
+    },
+    {
+      "agent": "report-generator",
+      "task": "generate",
+      "inputFrom": "log-analyzer",
+      "dependsOn": "log-analyzer"
+    }
+  ],
+  "success": true,
+  "results": {
+    "log-analyzer": {
+      "success": true,
+      "analysis": {
+        "totalLines": 13,
+        "critical": 1,
+        "errors": 4,
+        "warnings": 5,
+        "info": 3,
+        "findings": {
+          "critical": [
+            {
+              "line": 4,
+              "text": "2024-01-15 08:25:03 CRITICAL: Payment service crashed, service unreachable"
+            }
+          ],
+          "errors": [
+            {
+              "line": 2,
+              "text": "2024-01-15 08:24:12 ERROR: Database connection failed for user [REDACTED_EMAIL] from IP [REDACTED_IPV4]"
+            },
+            {
+              "line": 5,
+              "text": "2024-01-15 08:25:05 ERROR: API request failed with status 500"
+            },
+            {
+              "line": 7,
+              "text": "2024-01-15 08:26:12 ERROR: Authentication failed for user [REDACTED_EMAIL]"
+            },
+            {
+              "line": 12,
+              "text": "2024-01-15 08:30:22 ERROR: Failed to send notification to [REDACTED_EMAIL]"
+            }
+          ],
+          "warnings": [
+            {
+              "line": 3,
+              "text": "2024-01-15 08:24:15 WARNING: Retrying connection..."
+            },
+            {
+              "line": 6,
+              "text": "2024-01-15 08:25:45 WARNING: High memory usage detected (85%)"
+            },
+            {
+              "line": 8,
+              "text": "2024-01-15 08:26:50 WARNING: Deprecated function called in module auth.js"
+            },
+            {
+              "line": 10,
+              "text": "2024-01-15 08:28:15 WARNING: Slow query detected (2.3s) for user api-key: [REDACTED_APIKEY]"
+            },
+            {
+              "line": 13,
+              "text": "2024-01-15 08:31:45 WARNING: Rate limit approaching for IP [REDACTED_IPV4]"
+            }
+          ]
+        }
+      },
+      "sanitization": {
+        "count": 6,
+        "message": "Sanitized 6 sensitive items"
+      },
+      "agentToAgentCall": {
+        "called": "sanitizer",
+        "url": "http://localhost:5001",
+        "success": true
+      },
+      "summary": "Analyzed 13 log lines: 1 critical, 4 errors, 5 warnings",
+      "message": "Log analysis complete with sanitization"
+    },
+    "report-generator": {
+      "success": true,
+      "report": {
+        "title": "🎯 Project Intelligence Brief",
+        "timestamp": "2024-11-14T12:34:56.789Z",
+        "overview": "System analysis completed for 13 log entries.",
+        "findings": {
+          "critical": 1,
+          "errors": 4,
+          "warnings": 5,
+          "total": 10
+        },
+        "sanitization": "Sanitized 6 sensitive items",
+        "healthScore": 60,
+        "status": "🟡 Needs Attention",
+        "recommendations": [
+          "⚠️  URGENT: Address critical issues immediately",
+          "⚡ Consider addressing warnings to prevent future issues"
+        ]
+      },
+      "visualAsset": "\n📊 Visual Asset - System Health Chart\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nCritical:    ██████                        (1)\nErrors:      ████████████████████████      (4)\nWarnings:    ██████████████████████████████ (5)\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+      "summary": "Generated intelligence brief: 10 issues found, health score 60%",
+      "message": "Executive report and visual asset generated successfully"
+    }
+  },
+  "executionTrace": [
+    "log-analyzer: Log analysis complete with sanitization",
+    "report-generator: Executive report and visual asset generated successfully"
+  ]
+}
+
+
+FORMATTED VISUAL OUTPUT:
+------------------------
+
+=== PROJECT CHIMERA RESULTS ===
+
+📋 Execution Plan:
+  Step 1: log-analyzer (calls sanitizer internally)
+  Step 2: report-generator (depends on log-analyzer)
+
+🔄 Execution Trace:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Agent: Sanitizer (Called by Log Analyzer) ⚡ AGENT-TO-AGENT
+  → Sanitized 6 sensitive items
+  → Removed: 3 emails, 2 IP addresses, 1 API key
+  → Method: Direct HTTP call from log-analyzer
+
+Agent: Log Analyzer
+  → Called Sanitizer agent directly ✓
+  → Analyzed 13 log lines
+  → Found: 1 critical, 4 errors, 5 warnings, 3 info
+  → Critical Issue: "Payment service crashed, service unreachable"
+
+Agent: Report Generator
+  → Generated Project Intelligence Brief
+  → Health Score: 60%
+  → Status: 🟡 Needs Attention
+  → Recommendations:
+    • URGENT: Address critical issues immediately
+    • Consider addressing warnings to prevent future issues
+
+📊 Visual Asset - System Health Chart
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Critical:    ██████                        (1)
+Errors:      ████████████████████████      (4)
+Warnings:    ██████████████████████████████ (5)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Orchestration Complete!
+
+================================================================================
+KEY FEATURES DEMONSTRATED:
+================================================================================
+
+✅ Self-Registration
+   - All 3 agents auto-registered on startup
+   - Declared their tools and capabilities
+
+✅ Intelligent Planning
+   - Orchestrator analyzed request keywords
+   - Generated optimal execution plan with dependencies
+
+✅ Agent-to-Agent Communication ⚡
+   - Log Analyzer called Sanitizer DIRECTLY
+   - NOT orchestrator-mediated
+   - True agent autonomy demonstrated
+
+✅ Dependency Management
+   - Report Generator waited for Log Analyzer
+   - Used Log Analyzer's output as input
+   - Sequential execution with proper data flow
+
+✅ Result Aggregation
+   - Orchestrator collected all results
+   - Combined into single coherent response
+   - Provided execution trace for visibility
+
+================================================================================
+

@@ -1,0 +1,171 @@
+project-chimera/
+│
+├── 📋 Documentation
+│   ├── README.md                          # Main documentation with setup instructions
+│   ├── DESIGN.md                          # Architecture design document
+│   ├── QUICKSTART.md                      # 5-minute quick start guide
+│   ├── PROJECT_STRUCTURE.txt              # This file
+│   └── example_output.txt                 # Sample execution output
+│
+├── 🧪 Test Scripts
+│   ├── test-request.sh                    # Linux/Mac test script
+│   └── test-request.ps1                   # Windows PowerShell test script
+│
+├── ⚙️ Configuration
+│   ├── package.json                       # Root package with npm scripts
+│   └── .gitignore                         # Git ignore patterns
+│
+├── 🎭 orchestrator/                       # MCP Orchestrator (Port 5000)
+│   ├── src/
+│   │   ├── index.ts                       # Main server with Express routes
+│   │   ├── registry.ts                    # Agent registry (Map storage)
+│   │   ├── planner.ts                     # Rule-based planning engine
+│   │   ├── executor.ts                    # Plan execution logic
+│   │   └── types.ts                       # TypeScript interfaces
+│   ├── package.json
+│   ├── tsconfig.json
+│   └── dist/                              # Compiled JavaScript (after build)
+│
+└── 🤖 agents/                             # Autonomous Agent Services
+    │
+    ├── sanitizer/                         # Data Sanitizer Agent (Port 5001)
+    │   ├── src/
+    │   │   └── index.ts                   # • Removes PII (emails, IPs, SSNs)
+    │   │                                  # • Strips sensitive information
+    │   │                                  # • POST /sanitize endpoint
+    │   ├── package.json
+    │   ├── tsconfig.json
+    │   └── dist/
+    │
+    ├── log-analyzer/                      # Log Analyzer Agent (Port 5002)
+    │   ├── src/
+    │   │   └── index.ts                   # • Analyzes system logs
+    │   │                                  # • Finds errors, warnings, critical issues
+    │   │                                  # • ⚡ CALLS SANITIZER DIRECTLY
+    │   │                                  # • POST /analyze endpoint
+    │   ├── package.json
+    │   ├── tsconfig.json
+    │   └── dist/
+    │
+    └── report-generator/                  # Report Generator Agent (Port 5003)
+        ├── src/
+        │   └── index.ts                   # • Generates executive summaries
+        │                                  # • Creates ASCII visualizations
+        │                                  # • Calculates health scores
+        │                                  # • POST /generate-report endpoint
+        ├── package.json
+        ├── tsconfig.json
+        └── dist/
+
+═══════════════════════════════════════════════════════════════════════════════
+
+KEY FEATURES IMPLEMENTED:
+
+✅ Self-Registration Architecture
+   → Agents auto-register with orchestrator on startup
+   → Dynamic service discovery
+   → In-memory Map<name, AgentInfo> registry
+
+✅ Intelligent Planning
+   → Keyword-based rule engine
+   → Generates ordered execution plan
+   → Dependency management (inputFrom, dependsOn)
+
+✅ Agent-to-Agent Communication ⚡ (CRITICAL REQUIREMENT)
+   → Log Analyzer → Sanitizer (direct HTTP call)
+   → NOT orchestrator-mediated
+   → True agent autonomy
+
+✅ Orchestration Flow
+   → Natural language request processing
+   → Plan generation
+   → Sequential execution with dependencies
+   → Result aggregation
+
+═══════════════════════════════════════════════════════════════════════════════
+
+ENDPOINTS:
+
+Orchestrator (http://localhost:5000)
+  POST /register        - Agent self-registration
+  POST /plan-and-run    - Main orchestration endpoint
+  GET  /agents          - List registered agents
+  GET  /health          - Health check
+
+Sanitizer Agent (http://localhost:5001)
+  POST /sanitize        - Remove PII from text
+  GET  /info            - Agent metadata
+  GET  /health          - Health check
+
+Log Analyzer Agent (http://localhost:5002)
+  POST /analyze         - Analyze logs (calls sanitizer internally)
+  GET  /info            - Agent metadata
+  GET  /health          - Health check
+
+Report Generator Agent (http://localhost:5003)
+  POST /generate-report - Create executive summary with charts
+  GET  /info            - Agent metadata
+  GET  /health          - Health check
+
+═══════════════════════════════════════════════════════════════════════════════
+
+TECH STACK:
+
+• Language:      Node.js + TypeScript
+• Framework:     Express (minimal HTTP server)
+• Communication: REST APIs (HTTP/JSON)
+• Registry:      In-memory Map
+• Planning:      Rule-based keyword matching
+• Deployment:    Local development (4 separate processes)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+QUICK COMMANDS:
+
+Install everything:
+  npm run install:all
+
+Build all TypeScript:
+  npm run build:all
+
+Start services (4 terminals):
+  Terminal 1: npm run start:orchestrator
+  Terminal 2: npm run start:sanitizer
+  Terminal 3: npm run start:log-analyzer
+  Terminal 4: npm run start:report-generator
+
+Test the system:
+  ./test-request.sh                    # Linux/Mac
+  .\test-request.ps1                   # Windows
+
+Verify agents registered:
+  curl http://localhost:5000/agents
+
+═══════════════════════════════════════════════════════════════════════════════
+
+FILES BY PURPOSE:
+
+📖 Reading First:
+  1. QUICKSTART.md      - Get running in 5 minutes
+  2. README.md          - Complete documentation
+  3. DESIGN.md          - Deep architecture dive
+  4. example_output.txt - See what to expect
+
+💻 Code Entry Points:
+  1. orchestrator/src/index.ts           - Start here for orchestration logic
+  2. agents/log-analyzer/src/index.ts    - Agent-to-agent call implementation
+  3. orchestrator/src/planner.ts         - Planning algorithm
+  4. orchestrator/src/executor.ts        - Execution engine
+
+🧪 Testing:
+  1. test-request.sh / test-request.ps1  - Automated test scripts
+  2. Manual curl commands in README.md
+
+═══════════════════════════════════════════════════════════════════════════════
+
+TIME INVESTMENT: ~3 hours
+FOCUS: Working logic, clarity, creative thinking
+STATUS: ✅ Complete and ready for submission
+
+═══════════════════════════════════════════════════════════════════════════════
+
